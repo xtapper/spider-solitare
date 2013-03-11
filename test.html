@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<body>
+	<canvas id="canvas" width="800" height="600" style="border:1px solid #000000;">
+		Your browser does not support the HTML5 canvas tag.
+	</canvas>
+
+	<script src="engine.js"></script>
+	<script src="input.js"></script>
+	
+	
+	<script src="card.js"></script>
+	<script src="cardStack.js"></script>
+	<script src="stackingRule.js"></script>
+	<script src="game.js"></script>
+	
+	<script src="table.js"></script>
+	<script src="dealer.js"></script>
+	<script src="player.js"></script>
+	
+	<script src="polyfills/requestAnimationFramePolyfill.js"></script>
+	<script>
+	
+		
+var canvas = document.getElementById("canvas");
+var engine = null;
+	
+window.onload = function() {
+	engine = new Engine(canvas);
+	engine.init();
+	engine.loop();
+}
+
+document.onkeydown = function(event) {
+	engine.input.onkeydown(event);
+}
+document.onkeyup = function(event) {
+	engine.input.onkeyup(event);
+}
+document.onmousedown = function(event) {
+	engine.input.onmousedown(event);
+}
+document.onmouseup = function(event) {
+	engine.input.onmouseup(event);
+}
+canvas.onmousemove = function(event) {
+	engine.input.onmousemove(event);
+}
+
+	</script>
+	</body>
+</html>
+
