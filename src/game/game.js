@@ -3,6 +3,7 @@ function SpiderGame() {
 	this.table = {};
 	this.dealer = {};
 	this.player = {};
+	this.actionStack = new ActionStack();
 	
 	this.formatter = new Formatter();
 	

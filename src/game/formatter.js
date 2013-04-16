@@ -22,5 +22,11 @@ function Formatter() {
 	this.hiddenCardGap = 10;  
 	this.visibleCardGap = 20; 
 	
+	this.undoX = 700;
+	this.undoY = 10;
+	this.redoX = 750;
+	this.undoButtonWidth = 40;
+	this.undoButtonHeight = 30;
+	
 	//TODO: detect and size correctly depending on device
 }

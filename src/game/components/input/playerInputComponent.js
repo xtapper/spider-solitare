@@ -8,6 +8,21 @@ PlayerInputComponent.prototype.constructor = PlayerInputComponent;
 
 PlayerInputComponent.prototype.update = function(context, input, player) {
 
+	var formatter = window.engine.game.formatter;
+
+	//undo/redo
+	if(input.isLeftButtonPressed({left:formatter.undoX, top:formatter.undoY, 
+		right:formatter.undoX + formatter.undoButtonWidth, bottom: formatter.undoY + formatter.undoButtonHeight}))
+	{
+		window.engine.game.actionStack.undo();
+	}
+	else if(input.isLeftButtonPressed({left:formatter.redoX, top:formatter.undoY, 
+		right:formatter.redoX + formatter.undoButtonWidth, bottom: formatter.undoY + formatter.undoButtonHeight}))
+	{
+		window.engine.game.actionStack.redo();
+	}
+	
+	//moving cards
 	if(!player.isHoldingStack) {
 		for(var i=0; i<player.table.stacks.length; i++) {
 			var stack = player.table.stacks[i];

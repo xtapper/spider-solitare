@@ -9,6 +9,15 @@ PlayerGraphicComponent.prototype.constructor = PlayerGraphicComponent;
 
 PlayerGraphicComponent.prototype.update = function(context, input, player) {
 
+	var imageCache = window.engine.imageCache;
+	var formatter = window.engine.game.formatter;
+
+	var undoImage = imageCache.getImage("undo.png");
+	var redoImage = imageCache.getImage("redo.png");
+	
+	context.drawImage(undoImage, formatter.undoX, formatter.undoY);
+	context.drawImage(redoImage, formatter.redoX, formatter.undoY);
+
 	if(player.isHoldingStack) {
 		var x=input.getMouseX() - this.handOffset.x;
 		var y=input.getMouseY() - this.handOffset.y;
@@ -18,11 +27,10 @@ PlayerGraphicComponent.prototype.update = function(context, input, player) {
 		
 			var key = card.definition.suit[0] + card.definition.rank;
 			var imageName = "cards/" + key + ".png";
-			var image = window.engine.imageCache.getImage(imageName);
+			var image = imageCache.getImage(imageName);
 			
 			context.drawImage(image, x, y);
 			
-			var formatter = window.engine.game.formatter;
 			y += formatter.visibleCardGap;
 		}		
 	}	

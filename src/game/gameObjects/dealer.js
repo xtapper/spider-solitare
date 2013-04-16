@@ -15,16 +15,8 @@ Dealer.prototype.constructor = Dealer;
 //Deal from pile onto each stack
 Dealer.prototype.deal = function() {
 
-	var targetStack = 0;
-	var numLeftToDeal = Math.min(this.dealPile.numCards(), this.gameConstants.numStacks);
-	
-	while(numLeftToDeal > 0) {
-		var card = this.dealPile.takeCard();
-		this.table.stacks[targetStack].putCard(card.definition, true);
-		
-		targetStack++;		
-		numLeftToDeal--;
-	}
+	var deal = new DealAction(this, this.table);
+	window.engine.game.actionStack.doAction(deal);
 }
 
 //remove all cards and deal a new game
@@ -87,22 +79,3 @@ Dealer.prototype.dealNewGame = function() {
 		stacks[i].getTopCard().isVisible = true;
 	}
 }
-/*
-//try adding cards to a stack and handle failure if not able to
-Dealer.prototype.addCardsToStack = function(cards, destStack, startStack) {
-
-	//flip cards to make adding them easier
-	cards.reverse();
-	var targetStack = {};
-	
-	if(destStack.canStack(cards[cards.length-1].definition)) 
-		targetStack = destStack;
-	else
-		targetStack = startStack;
-		
-	while(cards.length > 0) {
-		var card = cards.pop();
-		targetStack.putCard(card.definition, card.isVisible);
-	}
-}
-*/

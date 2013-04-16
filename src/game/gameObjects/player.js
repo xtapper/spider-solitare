@@ -46,8 +46,10 @@ Player.prototype.addCardsToStack = function(cards, destStack, startStack) {
 	var targetStack = {};
 	
 	//check if they can legally stack
-	if(destStack.canStack(cards[cards.length-1].definition)) 
+	if(destStack.canStack(cards[cards.length-1].definition)) {
 		targetStack = destStack;
+		startStack.flipTopCard();
+	}
 	else
 		targetStack = startStack;
 		

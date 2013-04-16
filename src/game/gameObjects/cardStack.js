@@ -131,9 +131,8 @@ CardStack.prototype.takeCard = function() {
 CardStack.prototype.flipTopCard = function() {
 	var top = this.getTopCard();
 	top.isVisible = !top.isVisible;
-	
-	this.countVisibleCards();
 }
+
 
 CardStack.prototype.numVisibleCards = function() {
 	var numVisible = 0;
@@ -146,6 +145,7 @@ CardStack.prototype.numVisibleCards = function() {
 	
 	return numVisible;
 }
+
 
 CardStack.prototype.shuffle = function() {
 

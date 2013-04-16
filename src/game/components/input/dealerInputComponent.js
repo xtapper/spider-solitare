@@ -14,7 +14,7 @@ DealerInputComponent.prototype.update = function(context, input, dealer) {
 			top : dealer.formatter.dealPileY,
 			bottom : dealer.formatter.dealPileY + dealer.formatter.cardHeight
 		}
-	)) {
+	) && dealer.dealPile.numCards() > 0) {
 		//send deal message
 		dealer.deal();
 	}
