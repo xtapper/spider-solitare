@@ -1,0 +1,6 @@
+function GameComponent() {
+}
+
+GameComponent.prototype.update = function(context) {
+
+}

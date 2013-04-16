@@ -1,0 +1,11 @@
+card width is set to 0 occasionally
+
+
+Components:
+
+Graphics
+	-x
+	-y
+	
+Input
+	

@@ -131,10 +131,10 @@ Input.prototype.updateMouseStates = function() {
 	}
 }
 
-Input.prototype.mouseX = function() {
+Input.prototype.getMouseX = function() {
 	return this.mouseX;
 }
-Input.prototype.mouseY = function() {
+Input.prototype.getMouseY = function() {
 	return this.mouseY;
 }
 

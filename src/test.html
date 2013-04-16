@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<body>
+	<canvas id="canvas" width="800" height="600" style="border:1px solid #000000;">
+		Your browser does not support the HTML5 canvas tag.
+	</canvas>
+
+	<!-- engine -->
+	<script src="engine/engine.js"></script>
+	<script src="engine/input/input.js"></script>	
+	<script src="engine/graphics/imageCache.js"></script>
+	
+	
+	<!-- game -->
+	<script src="game/game.js"></script>
+	<script src="game/movingRule.js"></script>
+	<script src="game/stackingRule.js"></script>	
+	<script src="game/formatter.js"></script>	
+	
+		<!-- game objects -->
+		<script src="game/gameObjects/gameObject.js"></script>
+		<script src="game/gameObjects/card.js"></script>
+		<script src="game/gameObjects/cardStack.js"></script>	
+		
+		<script src="game/gameObjects/table.js"></script>
+		<script src="game/gameObjects/dealer.js"></script>
+		<script src="game/gameObjects/player.js"></script>	
+	
+	
+	<!-- Components -->
+		<script src="game/components/gameComponent.js"></script>
+		
+		<!-- Graphic components -->
+		<script src="game/components/graphics/cardStackGraphicComponent.js"></script>
+		<script src="game/components/graphics/tableGraphicComponent.js"></script>
+		<script src="game/components/graphics/dealerGraphicComponent.js"></script>
+		<script src="game/components/graphics/playerGraphicComponent.js"></script>
+		
+		<!-- Input components -->
+		<script src="game/components/input/dealerInputComponent.js"></script>
+		<script src="game/components/input/playerInputComponent.js"></script>
+	
+	
+	
+	<!-- polyfills -->
+	<script src="engine/polyfills/requestAnimationFramePolyfill.js"></script>
+	
+	<script>	
+
+window.resourceLocation = "../res/";
+window.imageLocation = window.resourceLocation + "images/";
+	
+window.onload = function() {
+	window.engine = new Engine(document.getElementById("canvas"));
+	window.engine = engine;
+	
+	window.engine.init();
+	window.engine.loop();
+}
+
+document.onkeydown = function(event) {
+	engine.input.onkeydown(event);
+}
+document.onkeyup = function(event) {
+	engine.input.onkeyup(event);
+}
+document.onmousedown = function(event) {
+	engine.input.onmousedown(event);
+}
+document.onmouseup = function(event) {
+	engine.input.onmouseup(event);
+}
+canvas.onmousemove = function(event) {
+	engine.input.onmousemove(event);
+}
+
+	</script>
+	</body>
+</html>
+
