@@ -1,6 +1,8 @@
 function DealAction(dealer, table) {
 	this.dealer = dealer;
 	this.table = table;
+	
+	Action.call(this);
 }
 DealAction.prototype = new Action();
 DealAction.prototype.constructor = DealAction;

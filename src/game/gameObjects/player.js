@@ -15,9 +15,6 @@ function Player(table) {
 Player.prototype = new GameObject();
 Player.prototype.constructor = Player;
 
-
-
-
 Player.prototype.pickupStack = function(stack, mouseX, mouseY) {
 	
 	//can't pick up an empty stack
@@ -41,20 +38,24 @@ Player.prototype.dropStack = function(destStack) {
 }
 Player.prototype.addCardsToStack = function(cards, destStack, startStack) {
 
-	//flip cards to make adding them easier
-	cards.reverse();
-	var targetStack = {};
-	
-	//check if they can legally stack
-	if(destStack.canStack(cards[cards.length-1].definition)) {
-		targetStack = destStack;
-		startStack.flipTopCard();
-	}
-	else
-		targetStack = startStack;
+	if(cards === null || cards.length === 0)
+		return;
 		
-	while(cards.length > 0) {
-		var card = cards.pop();
-		targetStack.putCard(card.definition, card.isVisible);
+	//don't create an action if moving these cards is invalid
+	if(destStack == startStack ||
+		!destStack.canStack(cards[0].definition)) {
+		//flip cards to make adding them easier
+		cards.reverse();
+		
+		//add them back to original stack
+		while(cards.length > 0) {
+			var card = cards.pop();
+			startStack.putCard(card.definition, card.isVisible);
+		}
+	}
+	else {
+		//move cards
+		var moveAction = new CardMoveAction(cards, startStack, destStack);
+		window.engine.game.actionStack.doAction(moveAction);
 	}
 }

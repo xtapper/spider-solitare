@@ -7,12 +7,14 @@ function Action() {
 
 Action.prototype.doAction = function() {
 	for(var i=0; i<this.resultingActions.length; i++) {
-		resultingAction.doAction();
+		this.resultingActions[i].doAction();
 	}
 }
 
 Action.prototype.undoAction = function() {
-	for(var i=this.resultingActions.length-1; i>=0; i++) {
-		resultingAction.undoAction();
+	for(var i=this.resultingActions.length-1; i>=0; i--) {
+		this.resultingActions[i].undoAction();
 	}
+	//clear resulting actions since doing the action will re-populate this
+	this.resultingActions.length = 0;
 }

@@ -45,13 +45,13 @@ CardStack.prototype.getNumMovableCards = function() {
 	var cardIndex = this.cards.length-2;
 	var topCard = this.getTopCard();
 	var bottomCard = this.cards[cardIndex];
-	
+
 	while(cardIndex >=1 && this.canMoveTogether(bottomCard.definition, topCard.definition) && topCard.isVisible) {
-			
+
 		cardIndex--;
 		if(cardIndex == 0)
 			break;
-			
+
 		numMovableCards++;
 		topCard = bottomCard;	
 		bottomCard = this.cards[cardIndex];
@@ -59,24 +59,22 @@ CardStack.prototype.getNumMovableCards = function() {
 	return numMovableCards;
 }
 
-//Get top cards that move together
-CardStack.prototype.popMovableCards = function() {
-
-	if(this.cards.length == 0)
-		return null;
-
-	var movableCards = [];
-	var lastCard = this.takeCard();
-	movableCards.push(lastCard);
+//get the top n cards of the stack
+CardStack.prototype.removeTopCards = function(numCards) {
 	
-	while(this.hasCards() && this.canMoveTogether(this.getTopCard().definition, lastCard.definition) && this.getTopCard().isVisible) {
-		lastCard = this.takeCard();
-		movableCards.push(lastCard);
+	var removedCards = [];
+
+	for(var x=0; x<numCards; x++) {
+		removedCards.push(this.cards.pop());
 	}
 	
-	movableCards.reverse();
-	return movableCards;
-	
+	return removedCards.reverse();
+}
+
+//remove top cards that move together
+CardStack.prototype.popMovableCards = function() {
+
+	return this.removeTopCards(this.getNumMovableCards());	
 }
 
 CardStack.prototype.hasCards = function() {
