@@ -22,7 +22,7 @@ Dealer.prototype.deal = function() {
 //remove all cards and deal a new game
 Dealer.prototype.dealNewGame = function() {
 
-	this.table.dealPile = new CardStack(false, false);
+	this.table.dealPile = new CardStack(0,0,false, false, false);
 	this.table.stacks = [];	
 	
 	//constants
@@ -49,7 +49,7 @@ Dealer.prototype.dealNewGame = function() {
 		}
 	}
 	
-	dealPile.shuffle();
+	//dealPile.shuffle();
 	
 	var x=this.formatter.left;
 	var y=this.formatter.top;
@@ -64,7 +64,7 @@ Dealer.prototype.dealNewGame = function() {
 	
 	//deal cards
 	var targetStack = 0;
-	var numLeftToDeal = initialStackHeight * numStacks;
+	var numLeftToDeal = Math.min(dealPile.numCards(), initialStackHeight * numStacks);
 	while(numLeftToDeal > 0) {
 		var card = dealPile.takeCard();
 		stacks[targetStack].putCard(card.definition, card.isVisible);

@@ -1,14 +1,13 @@
 //canAddToStack - can the user add cards to this stack
 //canAddOnEmptyStack - can the user add cards to an empty stack (0 cards)
 //canAddOnFlippedCards - can the user add cards to the stack if the top card is flipped (face down)
-function CardStack(x,y, formatter,canAddToStack, canAddOnEmptyStack, canAddOnFlippedCards) {
+function CardStack(x,y, canAddToStack, canAddOnEmptyStack, canAddOnFlippedCards) {
 	this.cards = [];
 	this.stackingRules = {};
 	this.movingRules = {};
 	
 	this.x=x;
 	this.y=y;
-	this.formatter = formatter;
 	
 	this.canAddToStack = canAddToStack;
 	this.canAddOnEmptyStack = canAddOnEmptyStack;
@@ -38,25 +37,29 @@ CardStack.prototype.getTopCard = function() {
 
 CardStack.prototype.getNumMovableCards = function() {
 
-	if(this.cards.length <= 1)
-		return this.cards.length;
 
 	var numMovableCards = 1;
-	var cardIndex = this.cards.length-2;
-	var topCard = this.getTopCard();
-	var bottomCard = this.cards[cardIndex];
-
-	while(cardIndex >=1 && this.canMoveTogether(bottomCard.definition, topCard.definition) && topCard.isVisible) {
-
-		cardIndex--;
-		if(cardIndex == 0)
-			break;
-
-		numMovableCards++;
-		topCard = bottomCard;	
-		bottomCard = this.cards[cardIndex];
+	
+	for(var i=this.cards.length-2; i>=0; i--) {
+	
+		var topCard = this.cards[i+1];
+		var bottomCard = this.cards[i];
+		if(this.canMoveTogether(bottomCard.definition, topCard.definition) && bottomCard.isVisible) {
+			numMovableCards++;
+		}
+		else 
+			break;		
 	}
+	
 	return numMovableCards;
+}
+
+CardStack.prototype.checkForSet = function() {
+	//13 = 2-Ace
+	if(this.getNumMovableCards() >= 13)
+		return true;
+	else
+		return false;
 }
 
 //get the top n cards of the stack
@@ -128,7 +131,8 @@ CardStack.prototype.takeCard = function() {
 
 CardStack.prototype.flipTopCard = function() {
 	var top = this.getTopCard();
-	top.isVisible = !top.isVisible;
+	if(top !== null)
+		top.isVisible = !top.isVisible;
 }
 
 

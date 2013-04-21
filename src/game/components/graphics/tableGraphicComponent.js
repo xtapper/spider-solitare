@@ -1,10 +1,5 @@
 function TableGraphicComponent() {
-	
-	//positioning constants	
-	this.left = 10;
-	this.top = 10;	
-	this.stackGap = 100; //horizontal space between stacks
-	
+		
 	GameComponent.call(this);
 }
 TableGraphicComponent.prototype = new GameComponent();

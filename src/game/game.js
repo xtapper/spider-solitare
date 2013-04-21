@@ -15,13 +15,13 @@ function SpiderGame() {
 
 SpiderGame.prototype.newGame = function() {
 
-	var numSuits = 2;
+	var numSuits = 1;
 	
 	this.suits = Card.suits.slice(0, numSuits);
 	this.ranks = Card.ranks;
 	
 	//game constants
-	this.constants = { numStacks: 8, numSuits : numSuits, numDecks : 8, initialStackHeight : 5,
+	this.constants = { numStacks: 8, numSuits : numSuits, numDecks : 2, initialStackHeight : 1,
 		suits : this.suits, ranks : this.ranks, stackingRules : this.stackingRules, movingRules : this.movingRules};
 	
 	this.table = new Table();

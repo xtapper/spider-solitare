@@ -12,7 +12,9 @@ DealAction.prototype.doAction = function() {
 	var dealer = this.dealer;
 
 	var targetStack = 0;
-	var numLeftToDeal = Math.min(dealer.dealPile.numCards(), dealer.gameConstants.numStacks);
+	//see if we're doing a partial deal
+	this.numDealtCards = Math.min(dealer.dealPile.numCards(), dealer.gameConstants.numStacks);
+	var numLeftToDeal = this.numDealtCards;
 	
 	while(numLeftToDeal > 0) {
 		var card = dealer.dealPile.takeCard();
@@ -20,6 +22,13 @@ DealAction.prototype.doAction = function() {
 		
 		targetStack++;		
 		numLeftToDeal--;
+	}
+	
+	//check for dealing completing a stack
+	for(var i=0; i<this.table.stacks.length; i++) {
+		if(this.table.stacks[i].checkForSet()) {
+			this.resultingActions.push(new FinishedSetAction(this.table.stacks[i]));
+		}
 	}
 	
 	Action.prototype.doAction.call(this);
@@ -30,7 +39,8 @@ DealAction.prototype.undoAction = function() {
 	
 	var dealer = this.dealer;
 
-	var targetStack = dealer.gameConstants.numStacks-1;
+	//start at stack# equal to the number of cards we dealt in case it wasn't a full deal
+	var targetStack = this.numDealtCards-1;
 	
 	while(targetStack >= 0) {
 		var card = this.table.stacks[targetStack].takeCard()

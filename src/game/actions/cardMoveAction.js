@@ -18,8 +18,12 @@ CardMoveAction.prototype.doAction = function() {
 	this.addToStack(this.destStack);
 	
 	//flip card if necessary
-	if(!this.sourceStack.getTopCard().isVisible)
+	if(this.sourceStack.getTopCard() !== null && !this.sourceStack.getTopCard().isVisible)
 		this.resultingActions.push(new CardFlipAction(this.sourceStack));
+		
+	if(this.destStack.checkForSet()) {
+		this.resultingActions.push(new FinishedSetAction(this.destStack));
+	}
 	
 	Action.prototype.doAction.call(this);	
 }

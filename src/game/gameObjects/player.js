@@ -42,20 +42,44 @@ Player.prototype.addCardsToStack = function(cards, destStack, startStack) {
 		return;
 		
 	//don't create an action if moving these cards is invalid
-	if(destStack == startStack ||
-		!destStack.canStack(cards[0].definition)) {
-		//flip cards to make adding them easier
-		cards.reverse();
-		
-		//add them back to original stack
-		while(cards.length > 0) {
-			var card = cards.pop();
-			startStack.putCard(card.definition, card.isVisible);
+	if(destStack == startStack) {
+		this.returnCards();
+	}	
+	
+	//check for partial stacks
+	var partialStackIndex =0;
+	while(partialStackIndex < this.cards.length) {
+	
+		if(destStack.canStack(cards[partialStackIndex].definition)) {		
+			
+			//return un-moved cards
+			if(partialStackIndex > 0) {
+				var unmoved = this.cards.slice(0, partialStackIndex);
+				for(var i=0; i<partialStackIndex; i++) {
+					startStack.putCard(this.cards[i].definition, this.cards[i].isVisible);
+				}
+			}
+			
+			//move cards
+			var moveAction = new CardMoveAction(cards.slice(partialStackIndex), startStack, destStack);
+			window.engine.game.actionStack.doAction(moveAction);	
+			
+			return;
 		}
+		
+		partialStackIndex++;
 	}
-	else {
-		//move cards
-		var moveAction = new CardMoveAction(cards, startStack, destStack);
-		window.engine.game.actionStack.doAction(moveAction);
-	}
+	
+	
+	this.returnCards();	
+}
+
+Player.prototype.returnCards = function() {
+	this.cards.reverse();
+	
+	//add them back to original stack
+	while(this.cards.length > 0) {
+		var card = this.cards.pop();
+		this.startStack.putCard(card.definition, card.isVisible);
+	}		
 }
